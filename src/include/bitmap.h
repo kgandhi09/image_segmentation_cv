@@ -28,11 +28,22 @@ struct Color{
 
 class bitmap_image{
 
+private:
+	int m_width;
+	int m_height;
+	vector<Color> m_colors;
+
 public:
 
 	bitmap_image();
-	void create_bitmap_image(string wrtie_path);
-	void read_bitmap_image(string file_path);
+	bitmap_image(int image, int height);
+	void create_bitmap_image();
+	void read_bitmap_image(string read_path);
+	void write_bitmap_image(string wrtie_path);
+	~bitmap_image();
+
+	Color getColor(int x, int y);
+	void setColor(Color& color, int x, int y);
 
 };
 
