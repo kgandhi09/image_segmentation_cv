@@ -4,13 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
-../src/image_segmentation.cpp 
+../src/bitmap.cpp \
+../src/image_segmentation.cpp \
+../src/read_image.cpp 
 
 OBJS += \
-./src/image_segmentation.o 
+./src/bitmap.o \
+./src/image_segmentation.o \
+./src/read_image.o 
 
 CPP_DEPS += \
-./src/image_segmentation.d 
+./src/bitmap.d \
+./src/image_segmentation.d \
+./src/read_image.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
