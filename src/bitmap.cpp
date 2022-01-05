@@ -39,10 +39,6 @@ void bitmap_image::read_bitmap_image(string read_path){
 
 }
 
-void bitmap_image::write_bitmap_image(string write_path){
-
-}
-
 Color bitmap_image::getColor(int x, int y){
 	return bitmap_image::m_colors[y*bitmap_image::m_width + x];
 }
@@ -76,7 +72,81 @@ void bitmap_image::write_bitmap_image(string write_path){
 	int fileSize = fileHeaderSize + infoHeaderSize + (bitmap_image::m_width * bitmap_image::m_height * 3) + (paddingAmount * bitmap_image::m_height);
 
 	char fileHeader[fileHeaderSize];
-	//File Type
+	//file type
+	fileHeader[0] = 'B';
+	fileHeader[1] = 'M';
+	//file size
+	fileHeader[2] = fileSize;
+	fileHeader[3] = fileSize >> 8;
+	fileHeader[4] = fileSize >> 16;
+	fileHeader[5] = fileSize >> 24;
+	//reserved 1 (not used)
+	fileHeader[6] = 0;
+	fileHeader[7] = 0;
+	//reserved 2 (not used)
+	fileHeader[8] = 0;
+	fileHeader[9] = 0;
+	//pixel data offset
+	fileHeader[10] = fileHeaderSize + infoHeaderSize;
+	fileHeader[11] = 0;
+	fileHeader[12] = 0;
+	fileHeader[13] = 0;
+
+	char infoHeader[infoHeaderSize];
+	//Header Size
+	infoHeader[0] = infoHeaderSize;
+	infoHeader[1] = 0;
+	infoHeader[2] = 0;
+	infoHeader[3] = 0;
+	//Image Width;
+	infoHeader[4] = bitmap_image::m_width;
+	infoHeader[5] = bitmap_image::m_width >> 8;
+	infoHeader[6] = bitmap_image::m_width >> 16;
+	infoHeader[7] = bitmap_image::m_width >> 24;
+	//Image Height;
+	infoHeader[8] = bitmap_image::m_height;
+	infoHeader[9] = bitmap_image::m_height >> 8;
+	infoHeader[10] = bitmap_image::m_height >> 16;
+	infoHeader[11] = bitmap_image::m_height >> 24;
+	//planes
+	infoHeader[12] = 1;
+	infoHeader[13] = 0;
+	//Bits Per Pixel (RGB)_
+	infoHeader[14] = 24; //(8 bits per channel R,G,B per pixel)
+	infoHeader[15] = 0;
+	//compression (no compression)
+	infoHeader[16] = 0;
+	infoHeader[17] = 0;
+	infoHeader[18] = 0;
+	infoHeader[19] = 0;
+	//Image Size (no compression)
+	infoHeader[20] = 0;
+	infoHeader[21] = 0;
+	infoHeader[22] = 0;
+	infoHeader[23] = 0;
+	//x pixels per meter (not specified)
+	infoHeader[24] = 0;
+	infoHeader[25] = 0;
+	infoHeader[26] = 0;
+	infoHeader[27] = 0;
+	//y pixels per meter (not specified)
+	infoHeader[28] = 0;
+	infoHeader[29] = 0;
+	infoHeader[30] = 0;
+	infoHeader[31] = 0;
+	//Total colors (color palette not used)
+	infoHeader[32] = 0;
+	infoHeader[33] = 0;
+	infoHeader[34] = 0;
+	infoHeader[35] = 0;
+	//Important colors (generally ignored)
+	infoHeader[36] = 0;
+	infoHeader[37] = 0;
+	infoHeader[38] = 0;
+	infoHeader[39] = 0;
+
+	f.write(reinterpret_cast<char*>(fileHeader), fileHeaderSize);
+	f.write(reinterpret_cast<char*>(infoHeader), infoHeaderSize);
 
 }
 
